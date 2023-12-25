@@ -8,7 +8,6 @@ void main() {
 class HttpApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
     return const MaterialApp(
       home: MainScreen(),
       debugShowCheckedModeBanner: false,

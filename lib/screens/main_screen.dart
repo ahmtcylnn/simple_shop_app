@@ -3,7 +3,10 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:http_demo_engindemirog/data/api/category_api.dart';
+import 'package:http_demo_engindemirog/data/api/product_api.dart';
 import 'package:http_demo_engindemirog/models/category.dart';
+import 'package:http_demo_engindemirog/models/product.dart';
+import 'package:http_demo_engindemirog/widgets/product_list_widget.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({super.key});
@@ -17,10 +20,12 @@ class MainScreen extends StatefulWidget {
 class MainScreenState extends State {
   List<Category> categories = [];
   List<Widget> categoryWidgets = [];
+  List<Product> products = [];
 
   @override
   void initState() {
     getCategoriesFromApi();
+
     super.initState();
   }
 
@@ -44,7 +49,8 @@ class MainScreenState extends State {
               child: Row(
                 children: categoryWidgets,
               ),
-            )
+            ),
+            ProductListWidget(products),
           ],
         ),
       ),
@@ -74,11 +80,23 @@ class MainScreenState extends State {
     return Padding(
       padding: const EdgeInsets.all(3.0),
       child: OutlinedButton(
-          onPressed: () {},
+          onPressed: () {
+            getProductsByCategoryId(category);
+          },
           child: Text(
             category.categoryName,
             style: TextStyle(color: Colors.blueGrey),
           )),
     );
+  }
+
+  void getProductsByCategoryId(Category category) {
+    ProductApi.getProductsByCategoryId(category.id).then((response) {
+      print(response.body);
+      setState(() {
+        Iterable list = json.decode(response.body);
+        products = list.map((product) => Product.fromJson(product)).toList();
+      });
+    });
   }
 }
