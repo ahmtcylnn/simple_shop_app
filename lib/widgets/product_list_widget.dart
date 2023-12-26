@@ -23,7 +23,7 @@ class ProductListWidgetState extends State<ProductListWidget> {
       padding: const EdgeInsets.all(8.0),
       child: Column(
         children: [
-          SizedBox(
+          const SizedBox(
             height: 10,
           ),
           SizedBox(
