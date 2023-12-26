@@ -2,10 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:http_demo_engindemirog/screens/main_screen.dart';
 
 void main() {
-  runApp(HttpApp());
+  runApp(const HttpApp());
 }
 
 class HttpApp extends StatelessWidget {
+  const HttpApp({super.key});
+
   @override
   Widget build(BuildContext context) {
     return const MaterialApp(

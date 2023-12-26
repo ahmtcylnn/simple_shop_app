@@ -1,7 +1,6 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:http_demo_engindemirog/data/api/category_api.dart';
 import 'package:http_demo_engindemirog/data/api/product_api.dart';
 import 'package:http_demo_engindemirog/models/category.dart';
@@ -25,7 +24,7 @@ class MainScreenState extends State {
   @override
   void initState() {
     getCategoriesFromApi();
-
+    getProducts();
     super.initState();
   }
 
@@ -60,6 +59,7 @@ class MainScreenState extends State {
   void getCategoriesFromApi() {
     CategoryApi.getCategories().then((response) {
       setState(() {
+        // ignore: avoid_print
         print(response.body);
         Iterable list = json.decode(response.body);
         categories =
@@ -85,13 +85,25 @@ class MainScreenState extends State {
           },
           child: Text(
             category.categoryName,
-            style: TextStyle(color: Colors.blueGrey),
+            style: const TextStyle(color: Colors.blueGrey),
           )),
     );
   }
 
   void getProductsByCategoryId(Category category) {
     ProductApi.getProductsByCategoryId(category.id).then((response) {
+      // ignore: avoid_print
+      print(response.body);
+      setState(() {
+        Iterable list = json.decode(response.body);
+        products = list.map((product) => Product.fromJson(product)).toList();
+      });
+    });
+  }
+
+  void getProducts() {
+    ProductApi.getProducts().then((response) {
+      // ignore: avoid_print
       print(response.body);
       setState(() {
         Iterable list = json.decode(response.body);

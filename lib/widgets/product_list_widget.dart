@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:http_demo_engindemirog/models/product.dart';
+import 'package:http_demo_engindemirog/widgets/product_list_row_widget.dart';
 
 class ProductListWidget extends StatefulWidget {
   final List<Product> products;
-  ProductListWidget(this.products, {Key? key}) : super(key: key);
+  const ProductListWidget(this.products, {Key? key}) : super(key: key);
 
   @override
   State<StatefulWidget> createState() {
@@ -18,12 +19,26 @@ class ProductListWidgetState extends State<ProductListWidget> {
   }
 
   Widget buildProductList(BuildContext context) {
-    return Expanded(
-      child: ListView.builder(
-        itemCount: widget.products.length,
-        itemBuilder: (context, index) {
-          return Text(widget.products[index].productName);
-        },
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Column(
+        children: [
+          SizedBox(
+            height: 10,
+          ),
+          SizedBox(
+            height: 500,
+            child: GridView.count(
+              crossAxisCount: 2,
+              children: List.generate(
+                widget.products.length,
+                (index) {
+                  return ProductListRowWidget(widget.products[index]);
+                },
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }
