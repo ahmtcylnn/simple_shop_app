@@ -13,9 +13,9 @@ class HttpApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       routes: {
-        "/cart": (BuildContext context) => CartScreen(),
+        "/cart": (BuildContext context) => const CartScreen(),
       },
-      home: MainScreen(),
+      home: const MainScreen(),
       debugShowCheckedModeBanner: false,
     );
   }

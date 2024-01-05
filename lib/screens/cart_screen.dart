@@ -1,15 +1,32 @@
 import 'package:flutter/material.dart';
 import 'package:http_demo_engindemirog/blocs/cart_bloc.dart';
+import 'package:http_demo_engindemirog/const/color.dart';
+import 'package:http_demo_engindemirog/const/text_style.dart';
 
 class CartScreen extends StatelessWidget {
+  final title = "Sepet";
   const CartScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Sepet"),
+        automaticallyImplyLeading: false,
         centerTitle: true,
+        elevation: 0,
+        title: Text(
+          title,
+          style: appbarTextStyle,
+        ),
+        backgroundColor: appbarBackgroundColor,
+        leading: IconButton(
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            icon: const Icon(
+              Icons.arrow_back_ios,
+              color: iconColor,
+            )),
       ),
       body: StreamBuilder(
         stream: cartBloc.getStream,
@@ -27,10 +44,18 @@ class CartScreen extends StatelessWidget {
         itemBuilder: (BuildContext context, index) {
           final cart = snapshot.data;
           return ListTile(
-            title: Text(cart[index].product.title),
+            leading: Image.network(cart[index].product.images.first),
+            title: Text(
+              cart[index].product.title,
+              style: productTextStyle,
+            ),
             subtitle: Text(cart[index].product.price.toString()),
             trailing: IconButton(
-              icon: Icon(Icons.remove_shopping_cart),
+              icon: const Icon(
+                Icons.remove_circle,
+                color: Colors.red,
+                size: 14,
+              ),
               onPressed: () {
                 cartBloc.removeFromCart(cart[index]);
               },

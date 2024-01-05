@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:http_demo_engindemirog/blocs/cart_bloc.dart';
+import 'package:http_demo_engindemirog/const/color.dart';
+import 'package:http_demo_engindemirog/const/text_style.dart';
 import 'package:http_demo_engindemirog/models/cart.dart';
 import 'package:http_demo_engindemirog/models/product_with_image.dart';
 
@@ -28,12 +30,16 @@ class ProductListRowWidget extends StatelessWidget {
                     return const Icon(Icons.error);
                   },
                 )),
-            Text(getProductName(product)),
             Padding(
-              padding: const EdgeInsets.only(left: 40),
-              child:
-                  Row(children: [getProductPrice(product), addToCart(product)]),
+              padding: const EdgeInsets.only(top: 2.0),
+              child: Text(
+                getProductName(product),
+                style: productTextStyle,
+              ),
             ),
+            Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [getProductPrice(product), addToCart(product)]),
           ],
         ),
       ),
@@ -51,17 +57,16 @@ class ProductListRowWidget extends StatelessWidget {
   }
 
   Widget getProductPrice(ProductWithImage product) {
-    return Text(
-      "${product.price} TL",
-      style: const TextStyle(fontSize: 15, color: Colors.green),
-    );
+    return Text("${product.price} TL", style: priceTextStyle);
   }
 
   Widget addToCart(ProductWithImage product) {
     return IconButton(
+        iconSize: 20,
+        color: addProductIconColor,
         onPressed: () {
           cartBloc.addToCart(Cart(product, 1));
         },
-        icon: Icon(Icons.add));
+        icon: const Icon(Icons.add));
   }
 }

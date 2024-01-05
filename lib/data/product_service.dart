@@ -6,13 +6,14 @@ import 'package:http_demo_engindemirog/models/product_with_image.dart';
 
 class ProductService {
   static List<ProductWithImage> products = [];
-  static ProductService _singleton = ProductService._internal();
+  static final ProductService _singleton = ProductService._internal();
   factory ProductService() {
     return _singleton;
   }
   ProductService._internal();
   static List<ProductWithImage> getAll() {
     ProductApiWithImage.getProducts().then((response) {
+      // ignore: avoid_print
       print(response.body);
       Iterable list = json.decode(response.body);
       products =

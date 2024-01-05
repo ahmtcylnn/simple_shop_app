@@ -28,7 +28,7 @@ class ProductListWidgetState extends State<ProductListWidget> {
             height: 10,
           ),
           SizedBox(
-            height: 500,
+            height: MediaQuery.of(context).size.height - 180,
             child: GridView.count(
               crossAxisCount: 2,
               children: List.generate(
