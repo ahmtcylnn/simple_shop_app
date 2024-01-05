@@ -3,11 +3,8 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 
 import 'package:http_demo_engindemirog/data/api/category_api_with_image.dart';
-// import 'package:http_demo_engindemirog/data/api/product_api.dart';
 import 'package:http_demo_engindemirog/data/api/product_api_with_image.dart';
 import 'package:http_demo_engindemirog/models/categorty_with_image.dart';
-// import 'package:http_demo_engindemirog/models/category.dart';
-// import 'package:http_demo_engindemirog/models/product.dart';
 import 'package:http_demo_engindemirog/models/product_with_image.dart';
 import 'package:http_demo_engindemirog/widgets/product_list_widget.dart';
 
@@ -48,6 +45,10 @@ class MainScreenState extends State {
                 color: Colors.white,
               ))
         ],
+        leading: IconButton(
+          icon: Icon(Icons.shopping_cart),
+          onPressed: () => Navigator.pushNamed(context, "/cart"),
+        ),
         centerTitle: true,
         title: const Text(
           "Alışveriş Sistemi",

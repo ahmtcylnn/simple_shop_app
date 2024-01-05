@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:http_demo_engindemirog/screens/cart_screen.dart';
 import 'package:http_demo_engindemirog/screens/main_screen.dart';
 
 void main() {
@@ -10,7 +11,10 @@ class HttpApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return MaterialApp(
+      routes: {
+        "/cart": (BuildContext context) => CartScreen(),
+      },
       home: MainScreen(),
       debugShowCheckedModeBanner: false,
     );
