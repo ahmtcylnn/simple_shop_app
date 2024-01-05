@@ -3,11 +3,11 @@ import 'package:http_demo_engindemirog/screens/cart_screen.dart';
 import 'package:http_demo_engindemirog/screens/main_screen.dart';
 
 void main() {
-  runApp(const HttpApp());
+  runApp(const ShopApp());
 }
 
-class HttpApp extends StatelessWidget {
-  const HttpApp({super.key});
+class ShopApp extends StatelessWidget {
+  const ShopApp({super.key});
 
   @override
   Widget build(BuildContext context) {
