@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:http_demo_engindemirog/models/product.dart';
+// import 'package:http_demo_engindemirog/models/product.dart';
+import 'package:http_demo_engindemirog/models/product_with_image.dart';
 
 class ProductListRowWidget extends StatelessWidget {
-  final Product product;
+  final ProductWithImage product;
+  // final Product product;
   const ProductListRowWidget(this.product, {super.key});
 
   @override
@@ -16,11 +18,15 @@ class ProductListRowWidget extends StatelessWidget {
         child: Column(
           children: [
             SizedBox(
-              height: 130,
-              width: MediaQuery.of(context).size.width / 2,
-              child: Image.network(
-                  "https://images.unsplash.com/photo-1692641995795-59026e35e458?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"),
-            ),
+                height: 130,
+                width: MediaQuery.of(context).size.width / 2,
+                child: Image.network(
+                  product.images.first,
+                  errorBuilder: (BuildContext context, Object error,
+                      StackTrace? stackTrace) {
+                    return const Icon(Icons.error);
+                  },
+                )),
             Text(getProductName(product)),
             getProductPrice(product),
           ],
@@ -29,19 +35,19 @@ class ProductListRowWidget extends StatelessWidget {
     );
   }
 
-  String getProductName(Product product) {
-    int howManyChar = product.productName.length;
+  String getProductName(ProductWithImage product) {
+    int howManyChar = product.title.length;
     if (howManyChar < 10) {
-      return product.productName;
+      return product.title;
     } else {
-      String truncatedName = product.productName.substring(0, 10);
+      String truncatedName = product.title.substring(0, 10);
       return '$truncatedName...';
     }
   }
 
-  Widget getProductPrice(Product product) {
+  Widget getProductPrice(ProductWithImage product) {
     return Text(
-      "${product.unitPrice} TL",
+      "${product.price} TL",
       style: const TextStyle(fontSize: 18, color: Colors.green),
     );
   }

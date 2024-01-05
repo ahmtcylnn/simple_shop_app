@@ -1,10 +1,14 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:http_demo_engindemirog/data/api/category_api.dart';
-import 'package:http_demo_engindemirog/data/api/product_api.dart';
-import 'package:http_demo_engindemirog/models/category.dart';
-import 'package:http_demo_engindemirog/models/product.dart';
+
+import 'package:http_demo_engindemirog/data/api/category_api_with_image.dart';
+// import 'package:http_demo_engindemirog/data/api/product_api.dart';
+import 'package:http_demo_engindemirog/data/api/product_api_with_image.dart';
+import 'package:http_demo_engindemirog/models/categorty_with_image.dart';
+// import 'package:http_demo_engindemirog/models/category.dart';
+// import 'package:http_demo_engindemirog/models/product.dart';
+import 'package:http_demo_engindemirog/models/product_with_image.dart';
 import 'package:http_demo_engindemirog/widgets/product_list_widget.dart';
 
 class MainScreen extends StatefulWidget {
@@ -17,9 +21,11 @@ class MainScreen extends StatefulWidget {
 }
 
 class MainScreenState extends State {
-  List<Category> categories = [];
+  List<CategoryWithImage> categories = [];
+  // List<Category> categories = [];
   List<Widget> categoryWidgets = [];
-  List<Product> products = [];
+  // List<Product> products = [];
+  List<ProductWithImage> products = [];
 
   @override
   void initState() {
@@ -32,6 +38,16 @@ class MainScreenState extends State {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        actions: [
+          IconButton(
+              onPressed: () {
+                getProducts();
+              },
+              icon: const Icon(
+                Icons.home,
+                color: Colors.white,
+              ))
+        ],
         centerTitle: true,
         title: const Text(
           "Alışveriş Sistemi",
@@ -57,13 +73,14 @@ class MainScreenState extends State {
   }
 
   void getCategoriesFromApi() {
-    CategoryApi.getCategories().then((response) {
+    CategoryApiWithImage.getCategories().then((response) {
       setState(() {
         // ignore: avoid_print
         print(response.body);
         Iterable list = json.decode(response.body);
-        categories =
-            list.map((category) => Category.fromJson(category)).toList();
+        categories = list
+            .map((category) => CategoryWithImage.fromJson(category))
+            .toList();
         getCategoryWidgets();
       });
     });
@@ -76,7 +93,7 @@ class MainScreenState extends State {
     return categoryWidgets;
   }
 
-  Widget getCategoryWidget(Category category) {
+  Widget getCategoryWidget(CategoryWithImage category) {
     return Padding(
       padding: const EdgeInsets.all(3.0),
       child: OutlinedButton(
@@ -84,30 +101,37 @@ class MainScreenState extends State {
             getProductsByCategoryId(category);
           },
           child: Text(
-            category.categoryName,
+            category.name,
             style: const TextStyle(color: Colors.blueGrey),
           )),
     );
   }
 
-  void getProductsByCategoryId(Category category) {
-    ProductApi.getProductsByCategoryId(category.id).then((response) {
+  void getProductsByCategoryId(CategoryWithImage category) {
+    ProductApiWithImage.getProductsByCategoryId(category.id).then((response) {
       // ignore: avoid_print
       print(response.body);
       setState(() {
         Iterable list = json.decode(response.body);
-        products = list.map((product) => Product.fromJson(product)).toList();
+        products =
+            list.map((product) => ProductWithImage.fromJson(product)).toList();
       });
     });
   }
 
   void getProducts() {
-    ProductApi.getProducts().then((response) {
+    ProductApiWithImage.getProducts().then((response) {
       // ignore: avoid_print
       print(response.body);
       setState(() {
-        Iterable list = json.decode(response.body);
-        products = list.map((product) => Product.fromJson(product)).toList();
+        try {
+          Iterable list = json.decode(response.body);
+          products = list
+              .map((product) => ProductWithImage.fromJson(product))
+              .toList();
+        } catch (e) {
+          print('Error decoding JSON: $e');
+        }
       });
     });
   }

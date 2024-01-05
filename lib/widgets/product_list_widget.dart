@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:http_demo_engindemirog/models/product.dart';
+// import 'package:http_demo_engindemirog/models/product.dart';
+import 'package:http_demo_engindemirog/models/product_with_image.dart';
 import 'package:http_demo_engindemirog/widgets/product_list_row_widget.dart';
 
 class ProductListWidget extends StatefulWidget {
-  final List<Product> products;
+  final List<ProductWithImage> products;
   const ProductListWidget(this.products, {Key? key}) : super(key: key);
 
   @override
