@@ -9,3 +9,4 @@ const productTitleColor = Colors.blueGrey;
 const addProductIconColor = Colors.orange;
 const appbarTextColor = Colors.black;
 final productTextColor = Colors.grey.shade800;
+const addToCartProductColor = Colors.orange;

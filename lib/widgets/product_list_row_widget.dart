@@ -4,6 +4,7 @@ import 'package:http_demo_engindemirog/const/color.dart';
 import 'package:http_demo_engindemirog/const/text_style.dart';
 import 'package:http_demo_engindemirog/models/cart.dart';
 import 'package:http_demo_engindemirog/models/product_with_image.dart';
+import 'package:http_demo_engindemirog/screens/product_detail.dart';
 
 class ProductListRowWidget extends StatelessWidget {
   final ProductWithImage product;
@@ -18,29 +19,35 @@ class ProductListRowWidget extends StatelessWidget {
   Widget buildProductItemCard(BuildContext context) {
     return InkWell(
       child: Card(
-        child: Column(
-          children: [
-            SizedBox(
-                height: 100,
-                width: MediaQuery.of(context).size.width / 2,
-                child: Image.network(
-                  product.images.first,
-                  errorBuilder: (BuildContext context, Object error,
-                      StackTrace? stackTrace) {
-                    return const Icon(Icons.error);
-                  },
-                )),
-            Padding(
-              padding: const EdgeInsets.only(top: 2.0),
-              child: Text(
-                getProductName(product),
-                style: productTextStyle,
+        child: GestureDetector(
+          onTap: () => Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: ((context) => ProductDetail(product)))),
+          child: Column(
+            children: [
+              SizedBox(
+                  height: 100,
+                  width: MediaQuery.of(context).size.width / 2,
+                  child: Image.network(
+                    product.images.first,
+                    errorBuilder: (BuildContext context, Object error,
+                        StackTrace? stackTrace) {
+                      return const Icon(Icons.error);
+                    },
+                  )),
+              Padding(
+                padding: const EdgeInsets.only(top: 2.0),
+                child: Text(
+                  getProductName(product),
+                  style: productTextStyle,
+                ),
               ),
-            ),
-            Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [getProductPrice(product), addToCart(product)]),
-          ],
+              Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [getProductPrice(product), addToCart(product)]),
+            ],
+          ),
         ),
       ),
     );
